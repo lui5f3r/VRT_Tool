@@ -4,13 +4,17 @@ const port = 3000
 const compareImages = require("resemblejs/compareImages");
 const fs = require("mz/fs");
 const shell = require('shelljs');
+let id = 0;
 
 app.get('/', async (req, res) => {
-    await shell.exec('npx cypress run');
+
+    await shell.exec('npx cypress run --env id=' + id);
 
     let data = await getDiff();
 
     res.send("Los % de diferencia para las 3 pruebas son: " + data)
+
+    id += 1;
 })
 
 app.listen(port, () => {
@@ -40,11 +44,11 @@ const getDiff = async () => {
     // data is the same as usual with an additional getBuffer() function
 
     const data = await compareImages(
-        await fs.readFile("./cypress/screenshots/vrt_color_pallete_spec.js/primera_paleta.png"),
-        await fs.readFile("./cypress/screenshots/vrt_color_pallete_spec.js/segunda_paleta.png"),
+        await fs.readFile("./cypress/screenshots/vrt_color_pallete_spec.js/primera_paleta" + id + ".png"),
+        await fs.readFile("./cypress/screenshots/vrt_color_pallete_spec.js/segunda_paleta" + id + ".png"),
         options
     );
-    await fs.writeFile("./cypress/screenshots/vrt_color_pallete_spec.js/diferencias.png", data.getBuffer());
+    await fs.writeFile("./cypress/screenshots/vrt_color_pallete_spec.js/diferencias" + id + ".png", data.getBuffer());
     console.log("***********data********* " + data.misMatchPercentage);
 
     var data1 = data.misMatchPercentage + "%";

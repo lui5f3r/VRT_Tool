@@ -1,7 +1,7 @@
 {
   "name": "resemblejstaller2",
   "version": "1.0.0",
-  "description": "Pruebas sobre taller 2 con resemblejs",
+  "description": "Herramienta para ejecucion de VRT",
   "main": "index.js",
   "dependencies": {
     "express": "^4.17.1",
