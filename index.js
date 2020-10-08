@@ -5,20 +5,20 @@ const compareImages = require("resemblejs/compareImages");
 const fs = require("mz/fs");
 const shell = require('shelljs');
 
-app.get('/', async(req,res) => {
-  
-  
-  let data = await getDiff();
+app.get('/', async (req, res) => {
+    await shell.exec('npx cypress run');
 
-  res.send("Los % de diferencia para las 3 pruebas son: " + data)
+    let data = await getDiff();
+
+    res.send("Los % de diferencia para las 3 pruebas son: " + data)
 })
 
 app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`)
+    console.log(`Example app listening at http://localhost:${port}`)
 })
 
 //Tomado de https://www.npmjs.com/package/resemblejs 
-const getDiff = async() => {
+const getDiff = async () => {
     const options = {
         output: {
             errorColor: {
@@ -36,21 +36,19 @@ const getDiff = async() => {
         ignore: "less"
     };
 
-    var data = "";
- 
     // The parameters can be Node Buffers
     // data is the same as usual with an additional getBuffer() function
-   
+
     const data = await compareImages(
-        await fs.readFile("./cypress/screenshots/vrt_color_pallete_spec.js/primera_paleta"),
-        await fs.readFile("./cypress/screenshots/vrt_color_pallete_spec.js/segunda_paleta"),
+        await fs.readFile("./cypress/screenshots/vrt_color_pallete_spec.js/primera_paleta.png"),
+        await fs.readFile("./cypress/screenshots/vrt_color_pallete_spec.js/segunda_paleta.png"),
         options
     );
-    await fs.writeFile("./cypress/screenshots/vrt_color_pallete_spec.js/diferencias.png", data3.getBuffer());
-    console.log("***********data********* " + data3.misMatchPercentage);
+    await fs.writeFile("./cypress/screenshots/vrt_color_pallete_spec.js/diferencias.png", data.getBuffer());
+    console.log("***********data********* " + data.misMatchPercentage);
 
-    data = data.misMatchPercentage + "%";
+    var data1 = data.misMatchPercentage + "%";
 
-    return data;
+    return data1;
 }
- 
+

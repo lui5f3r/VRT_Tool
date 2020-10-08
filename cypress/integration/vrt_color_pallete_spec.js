@@ -1,4 +1,4 @@
-context('Login Tests', () => {
+context('VRT Test', () => {
 
   it('Generar paleta de colores ', () => {
     cy.visit('https://lui5f3r.github.io/palette.html')
